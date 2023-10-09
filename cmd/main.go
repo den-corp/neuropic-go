@@ -10,16 +10,17 @@ import (
 	proto "github.com/den-corp/proto"
 	"github.com/gin-gonic/gin"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 func main() {
 
-	conn, err := grpc.Dial("localhost:2000", grpc.WithInsecure())
+	conn, err := grpc.Dial("0.0.0.0:2000", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	client := proto.NewNeuroServoceClient(conn)
+	client := proto.NewNeuroServiceClient(conn)
 
 	g := gin.Default()
 
